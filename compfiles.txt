@@ -1,0 +1,6 @@
+./miPrincipal/AppArbolAVL.java
+./miPrincipal/AppArbol.java
+./miPrincipal/AppArbolBinarioBusqueda.java
+./miPrincipal/AppGrafos.java
+./miPrincipal/Principal.java
+./miTest/AppTest.java
