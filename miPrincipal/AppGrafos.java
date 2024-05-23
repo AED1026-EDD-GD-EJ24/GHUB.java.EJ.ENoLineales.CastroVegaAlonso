@@ -1,5 +1,8 @@
 package miPrincipal;
 import java.util.Scanner;
+
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 import grafos.matrizAdyacencia.Vertice;
 import grafos.listaAdyacencia.GrafoAdcia;
 import grafos.matrizAdyacencia.GrafoMatriz;
@@ -92,4 +95,39 @@ public class AppGrafos{
         }
 
     }
+    public static void recorridos(){
+        System.out.println("********************************");
+        System.out.println("RECORRIDOS POR ANCHURA Y PROFUNDIDAD");
+        System.out.println("********************************");
+        GrafoMatriz grafo = new GrafoMatriz();
+
+        grafo.nuevoVertice("A");
+        grafo.nuevoVertice("B");
+        grafo.nuevoVertice("C");
+        grafo.nuevoVertice("D");
+        grafo.nuevoVertice("H");
+        grafo.nuevoVertice("R");
+        grafo.nuevoVertice("T");
+        
+        try{
+            grafo.nuevoArco("B", "H");
+            grafo.nuevoArco("C", "R");
+            grafo.nuevoArco("D", "C");
+            grafo.nuevoArco("D", "B");
+            grafo.nuevoArco("H", "A");
+            grafo.nuevoArco("H", "T");
+            grafo.nuevoArco("R", "H");
+            System.out.println("Recorrido por anchura");
+            GrafoMatriz.recorrerAnchura(grafo, "D");
+            System.out.println("Recorrido por profundidad");
+            GrafoMatriz.recorrerAnchura(grafo, "D");
+           
+        }
+        catch(Exception e){
+            System.out.println("Ecvepcion: "+e.getMessage());
+        }
+
+
+    }
+
 }

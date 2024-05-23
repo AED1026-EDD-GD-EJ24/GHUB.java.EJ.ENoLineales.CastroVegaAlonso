@@ -1,12 +1,19 @@
 package interfase;
 
-public class CriterioPersonaId extends Criterio {
 
-    @Override
-    public int compara(Object a, Object b) {
-        Persona p1 = (Persona) a;
-        Persona p2 = (Persona) b;
-        return p1.getId() - p2.getId();
-    }
 
+public class CriterioPersonaId extends Criterio<Persona>{
+     public int comparar(Persona a, Persona b){
+          
+          if (a.getId() == b.getId())
+              return 0;
+          else if (a.getId() > b.getId())
+              return 1;
+          else
+              return -1;
+          
+          //return a.getId()-b.getId();
+
+     }
+     
 }

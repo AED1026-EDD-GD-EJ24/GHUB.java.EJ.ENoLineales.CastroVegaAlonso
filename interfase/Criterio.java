@@ -1,6 +1,6 @@
 package interfase;
 
-public interface Criterio {
-
-    public abstract int compara(a,b);
-}
+public abstract class Criterio<T> {
+    public abstract int comparar(T a, T b);
+    
+} 
