@@ -1,6 +1,7 @@
 package miPrincipal;
 import java.util.Scanner;
 import grafos.matrizAdyacencia.Vertice;
+import grafos.listaAdyacencia.GrafoAdcia;
 import grafos.matrizAdyacencia.GrafoMatriz;
 public class AppGrafos{
     public static void menu(){
@@ -66,6 +67,29 @@ public class AppGrafos{
         System.out.println("********************************");
         System.out.println("        LISTA ADYACENCIA        ");
         System.out.println("********************************");
+
+        GrafoAdcia grafo = new GrafoAdcia();
+
+        try {
+            grafo.nuevoVertice("D");
+            grafo.nuevoVertice("F");
+            grafo.nuevoVertice("K");
+            grafo.nuevoVertice("L");
+            grafo.nuevoVertice("R");
+            grafo.nuevoArco("D", "F");
+            grafo.nuevoArco("D", "K");
+            grafo.nuevoArco("F", "D");
+            grafo.nuevoArco("L", "K");
+            grafo.nuevoArco("L", "F");
+            grafo.nuevoArco("R", "D");
+            System.out.println("Vertices:");
+            System.out.println(grafo.imprimirVertices());
+            System.out.println("Matriz Adyacencia:");
+            System.out.println(grafo.imprimirMatriz());
+
+        } catch (Exception e) {
+           //e.printStackTrace();
+        }
 
     }
 }
