@@ -1,4 +1,4 @@
-package arbolBinarioOrdenado;
+package arbolAVL;
 public class Nodo {
     private Comparable valor;
 	private Nodo izquierdo;

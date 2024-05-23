@@ -4,19 +4,8 @@ import colas.Cola;
 
 public class ArbolBinario{
     private Nodo raiz;
-    public ArbolBinario(){
-        this.raiz = null;
-    }
-    public ArbolBinario(Nodo raiz){
-        this.raiz = raiz;
     
-    }
-    public Nodo getRaiz(){
-        return this.raiz;
-    }
-    public void setRaiz(Nodo raiz){
-        this.raiz = raiz;
-    }
+    
     
     private void visitar(Nodo aux){
         System.out.print(aux.getValor()+" ");
@@ -136,10 +125,162 @@ public class ArbolBinario{
 
     }
 
-    private void insertar(Object valor) throws Exception{
+    //Insercion de nodo, version iterativa
+
+    public void insertar(Object valor) throws Exception{
+        Comparable dato = (Comparable)valor;
+        Nodo nuevo = new Nodo();
+        nuevo.setValor(dato);
+
+        if(raiz == null){
+           raiz = nuevo;
+           
+        }
+
+        else{
+            //anterior hace una referencia al padre de aux
+            Nodo anterior = null;
+
+            // aux es un auxiliar que va recorriendo los nodos, desde la raiz
+            Nodo aux = raiz;
+           
+            
+            while(aux !=null){
+                anterior = aux;
+                if(dato.esMenor(aux.getValor()))
+                      aux = aux.getIzquierdo(); 
+                  
+                else if(dato.esMayor(aux.getValor()))
+                    aux = aux.getDerecho();
+                else 
+                   throw new Exception("Dato Duplicado");
+                    
+            }
+            if(dato.esMenor(anterior.getValor()))
+               anterior.setIzquierdo(nuevo);
+            else
+               anterior.setDerecho(nuevo);
+
+        }
 
     }
 
+    //Version recursiva de insertar
+    public void insertar2(Object valor) throws Exception{
+        Comparable dato = (Comparable)valor;
+        raiz = insertarRec(raiz, dato);
+    }
 
+    private Nodo insertarRec(Nodo raizSub, Comparable dato) throws Exception{
+        if(raizSub == null)
+           //caso base, termina la recursividad
+           raizSub = new Nodo(dato);
+        else{
+            if (dato.esMenor(raizSub.getValor())){
+                Nodo iz = insertarRec(raizSub.getIzquierdo(), dato);
+                raizSub.setIzquierdo(iz);
+
+            }else{
+                if(dato.esMayor(raizSub.getValor())){
+                    Nodo dr = insertarRec(raizSub.getDerecho(),dato);
+                    raizSub.setDerecho(dr);
+                }
+                else{
+                     
+                   throw new Exception("Nodo duplicado");
+                }
+            }
+        }
+        return raizSub;
+    }
+    //Elimina un Nodo del árbol
+    public boolean eliminar(Object valor){
+        Comparable dato = (Comparable)valor;
+        //Buscar el nodo a eliminar
+        Nodo antecesor = null;
+        Nodo aux = raiz;
+        while(aux != null){
+            if (dato.esIgual(aux.getValor())){
+                break;
+            }
+            antecesor = aux;
+            if(dato.esMenor(aux.getValor()))
+               aux = aux.getIzquierdo();
+            else
+               aux = aux.getDerecho();
+        }
+        if (aux ==null)
+           return false; // dato no encontrado
+        /* si llega a este punto, el nodo a eliminar existe y es
+           aux y su antecesor es antecesor
+         * Examinar cada caso
+         * 1. si tiene menos de dos hijos, incluso una hoja
+         *    reajustar los enlaces de su antecesor
+         */
+        if(aux.getIzquierdo()==null)
+           if(aux.getValor().esMenor(antecesor.getValor()))
+              antecesor.setIzquierdo(aux.getDerecho());
+           else
+              antecesor.setDerecho(aux.getDerecho());
+        else if(aux.getDerecho()==null)
+           if (aux.getValor().esMenor(antecesor.getValor()))
+              antecesor.setIzquierdo(aux.getIzquierdo());
+           else
+              antecesor.setDerecho(aux.getIzquierdo());
+        else 
+           //El nodo a eliminar tiene ramas izquierda y derecha
+           reemplazarPorMayorIzquierdo(aux);
+        aux = null;
+        return true;
+    }
+    private void reemplazarPorMayorIzquierdo(Nodo act){
+        Nodo mayor = act;
+        Nodo ant = act;
+        mayor = act.getIzquierdo();
+        //Buscar el mayor de la rama izquierda
+        //ant es el antecesor de mayor
+        while(mayor.getDerecho() != null){
+            ant = mayor;
+            mayor = mayor.getDerecho();
+        }
+        act.setValor(mayor.getValor()); //reemplazo
+        //reajuste
+        if(ant == act)
+           ant.setIzquierdo(mayor.getIzquierdo());
+        else 
+           ant.setDerecho(mayor.getDerecho());
+
+    }
+
+    public Nodo buscar(Object valor){
+        Comparable dato = (Comparable) valor;
+        if (raiz == null)
+           return raiz;
+        else{
+            //aux: auxiliar que va recorriendo los nodos, desde la raiz
+            Nodo aux = raiz;
+            while(aux != null){
+                if(dato.esIgual(aux.getValor()))
+                   return aux;
+                if(dato.esMenor(aux.getValor()))
+                   aux = aux.getIzquierdo();
+                else
+                   aux = aux.getDerecho();
+            }
+            return null;
+        }
+    }
+    public Nodo getRaiz() {
+        return raiz;
+    }
+    public void setRaiz(Nodo raiz) {
+        this.raiz = raiz;
+    }
+    public ArbolBinario(Nodo raiz) {
+        this.raiz = raiz;
+    }
+    public ArbolBinario() {
+        raiz =null;
+    }
     
 }
